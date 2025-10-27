@@ -1,0 +1,34 @@
+{
+  "hash": "fae6cda4",
+  "configHash": "063049e1",
+  "lockfileHash": "9c28931d",
+  "browserHash": "f4e4719f",
+  "optimized": {
+    "@angular/common/http": {
+      "src": "../../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "851d8643",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "6fb2604a",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "b9a04166",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-NONZ4TYJ": {
+      "file": "chunk-NONZ4TYJ.js"
+    },
+    "chunk-VOAREERM": {
+      "file": "chunk-VOAREERM.js"
+    }
+  }
+}

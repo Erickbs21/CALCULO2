@@ -1,0 +1,89 @@
+<main class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-4 sm:p-6 md:p-8 font-sans">
+  <div class="max-w-4xl mx-auto">
+    
+    <header class="text-center mb-8">
+      <h1 class="text-4xl sm:text-5xl font-bold text-primary-600 dark:text-primary-400">Cálculo II</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 mt-2">Identificador de Métodos de Integración</p>
+    </header>
+
+    <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-xl p-6 sm:p-8">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <input 
+          type="text" 
+          [value]="integralIngresada()"
+          (input)="alCambiarInput($event)"
+          (keyup.enter)="analizarIntegral()"
+          placeholder="Ej: ∫ (x^2)*ln(x) dx" 
+          class="flex-grow w-full px-5 py-4 text-lg bg-gray-100 dark:bg-gray-700 border-2 border-transparent rounded-lg focus:outline-none focus:ring-4 focus:ring-primary-500/50 focus:border-primary-500 transition-all duration-300"
+        />
+        <button 
+          (click)="analizarIntegral()" 
+          [disabled]="analizando()"
+          class="w-full sm:w-auto px-8 py-4 text-lg font-semibold text-white bg-primary-600 rounded-lg shadow-md hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-500/50 disabled:bg-primary-400 dark:disabled:bg-primary-800 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center">
+          @if(analizando()) {
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Analizando...</span>
+          } @else {
+            <span>Analizar</span>
+          }
+        </button>
+      </div>
+
+      <div class="relative mt-4 text-center">
+        <button (click)="mostrarEjemplos.set(!mostrarEjemplos())" class="text-sm text-primary-600 dark:text-primary-400 hover:underline">
+          ¿No sabes qué escribir? Prueba un ejemplo
+        </button>
+        @if (mostrarEjemplos()) {
+          <div class="absolute z-10 w-full sm:w-2/3 lg:w-1/2 left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl py-2">
+            @for (ejemplo of ejemplos; track ejemplo) {
+              <a (click)="seleccionarEjemplo(ejemplo)" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-600 cursor-pointer text-left">{{ ejemplo }}</a>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    @if (resultadoAnalisis(); as resultado) {
+      <div class="mt-10 bg-white dark:bg-gray-800 shadow-2xl rounded-xl p-6 sm:p-8 animate-fade-in">
+        <h2 class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-4 border-b-2 border-primary-200 dark:border-primary-800 pb-2">Análisis de la Integral</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-primary-50 dark:bg-gray-700/50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">Método Sugerido</h3>
+            <p class="text-xl font-bold text-primary-700 dark:text-primary-300">{{ resultado.metodo }}</p>
+          </div>
+          <div class="bg-primary-50 dark:bg-gray-700/50 p-4 rounded-lg">
+            <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200">Tipo de Integral</h3>
+            <p class="text-lg text-gray-600 dark:text-gray-300">{{ resultado.tipo }}</p>
+          </div>
+        </div>
+        <div class="mt-6">
+          <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-2">Explicación</h3>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">{{ resultado.explicacion }}</p>
+        </div>
+        <div class="mt-6 border-t border-gray-200 dark:border-gray-700 pt-4">
+          <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 mb-2">Ejemplo Clásico</h3>
+          <code class="block w-full text-left bg-gray-100 dark:bg-gray-900 p-3 rounded-md text-gray-800 dark:text-gray-200 font-mono text-sm">{{ resultado.ejemplo }}</code>
+        </div>
+      </div>
+    } @else if (!analizando()) {
+       <div class="mt-10 text-center p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+         <p class="text-gray-500 dark:text-gray-400">Ingresa una integral para analizarla y encontrar el mejor método de solución.</p>
+       </div>
+    }
+
+  </div>
+</main>
+
+<style>
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
